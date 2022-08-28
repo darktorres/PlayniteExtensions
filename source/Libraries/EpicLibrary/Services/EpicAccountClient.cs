@@ -42,7 +42,7 @@ namespace EpicLibrary.Services
         private readonly string assetsUrl = @"";
         private readonly string catalogUrl = @"";
         private readonly string playtimeUrl = @"";
-        private const string authEcodedString = "MzRhMDJjZjhmNDQxNGUyOWIxNTkyMTg3NmRhMzZmOWE6ZGFhZmJjY2M3Mzc3NDUwMzlkZmZlNTNkOTRmYzc2Y2Y=";
+        private const string authEncodedString = "MzRhMDJjZjhmNDQxNGUyOWIxNTkyMTg3NmRhMzZmOWE6ZGFhZmJjY2M3Mzc3NDUwMzlkZmZlNTNkOTRmYzc2Y2Y=";
         private const string userAgent = @"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36 Vivaldi/4.3";
 
         public EpicAccountClient(IPlayniteAPI api, string tokensPath)
@@ -135,7 +135,7 @@ namespace EpicLibrary.Services
             using (var httpClient = new HttpClient())
             {
                 httpClient.DefaultRequestHeaders.Clear();
-                httpClient.DefaultRequestHeaders.Add("Authorization", "basic " + authEcodedString);
+                httpClient.DefaultRequestHeaders.Add("Authorization", "basic " + authEncodedString);
                 using (var content = new StringContent($"grant_type=exchange_code&exchange_code={exchangeKey}&token_type=eg1"))
                 {
                     content.Headers.Clear();
@@ -247,12 +247,12 @@ namespace EpicLibrary.Services
             }
         }
 
-        private void renewToknes(string refreshToken)
+        private void renewTokens(string refreshToken)
         {
             using (var httpClient = new HttpClient())
             {
                 httpClient.DefaultRequestHeaders.Clear();
-                httpClient.DefaultRequestHeaders.Add("Authorization", "basic " + authEcodedString);
+                httpClient.DefaultRequestHeaders.Add("Authorization", "basic " + authEncodedString);
                 using (var content = new StringContent($"grant_type=refresh_token&refresh_token={refreshToken}&token_type=eg1"))
                 {
                     content.Headers.Clear();
@@ -319,7 +319,7 @@ namespace EpicLibrary.Services
             return null;
         }
 
-        private string getExcahngeToken(string sid)
+        private string getExchangeToken(string sid)
         {
             var cookieContainer = new CookieContainer();
             using (var handler = new HttpClientHandler() { CookieContainer = cookieContainer })
